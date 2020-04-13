@@ -31,7 +31,7 @@ namespace Tennis
         public string GetScore()
         {
             string score = "";
-            var tempScore = 0;
+
             if (m_score1 == m_score2)
             {
                 if(m_score1>2)
@@ -49,12 +49,7 @@ namespace Tennis
             }
             else
             {
-                for (var i = 1; i < 3; i++)
-                {
-                    if (i == 1) tempScore = m_score1;
-                    else { score += "-"; tempScore = m_score2; }
-                    score+=ScoreNames[tempScore];
-                }
+                score=ScoreNames[m_score1]+"-"+ScoreNames[m_score2];
             }
             return score;
         }
