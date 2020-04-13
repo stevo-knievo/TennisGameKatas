@@ -7,6 +7,13 @@ namespace Tennis
         private string player1Name;
         private string player2Name;
 
+        private string[] ScoreNames = new string[]{
+            "Love",
+            "Fifteen",
+            "Thirty",
+            "Forty"                       
+        } ;
+
         public TennisGame1(string player1Name, string player2Name)
         {
             this.player1Name = player1Name;
@@ -58,21 +65,7 @@ namespace Tennis
                 {
                     if (i == 1) tempScore = m_score1;
                     else { score += "-"; tempScore = m_score2; }
-                    switch (tempScore)
-                    {
-                        case 0:
-                            score += "Love";
-                            break;
-                        case 1:
-                            score += "Fifteen";
-                            break;
-                        case 2:
-                            score += "Thirty";
-                            break;
-                        case 3:
-                            score += "Forty";
-                            break;
-                    }
+                    score+=ScoreNames[tempScore];
                 }
             }
             return score;
