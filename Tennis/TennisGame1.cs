@@ -5,12 +5,20 @@ namespace Tennis
 {
     class Player
     {
-        public string Name { get; set; }
-        public int Points { get; set;}
+        public Player(string name)
+        {
+            Name = name;
+        }
+        public string Name { get; }
+        private int _points;
+        public int Points
+        {
+            get { return _points; }
+        }
 
         public void WonPoint()
         {
-            Points++;
+            _points++;
         }
     }
 
@@ -27,13 +35,13 @@ namespace Tennis
 
         public TennisGame1(string player1Name, string player2Name)
         {
-            _players.Add(new Player { Name = player1Name });
-            _players.Add(new Player { Name = player2Name });
+            _players.Add(new Player(player1Name));
+            _players.Add(new Player(player2Name));
         }
 
         public void WonPoint(string playerName)
         {
-            _players.First(p=>p.Name==playerName).WonPoint();
+            _players.First(p => p.Name == playerName).WonPoint();
         }
 
         public string GetScore()
@@ -41,7 +49,7 @@ namespace Tennis
             string score = "";
             var player1 = _players[0];
             var player2 = _players[1];
-            
+
             if (player1.Points == player2.Points)
             {
                 if (player1.Points > 2)
