@@ -6,7 +6,12 @@ namespace Tennis
     class Player
     {
         public string Name { get; set; }
-        public int Points { get; set; }
+        public int Points { get; set;}
+
+        public void WonPoint()
+        {
+            Points++;
+        }
     }
 
     class TennisGame1 : ITennisGame
@@ -28,7 +33,7 @@ namespace Tennis
 
         public void WonPoint(string playerName)
         {
-            _players.First(p=>p.Name==playerName).Points++;
+            _players.First(p=>p.Name==playerName).WonPoint();
         }
 
         public string GetScore()
@@ -46,10 +51,10 @@ namespace Tennis
             }
             else if (player1.Points >= 4 || player2.Points >= 4)
             {
-                var difference = player1.Points - player2.Points;
-                if (difference == 1) score = "Advantage player1";
-                else if (difference == -1) score = "Advantage player2";
-                else if (difference >= 2) score = "Win for player1";
+                var pointDifference = player1.Points - player2.Points;
+                if (pointDifference == 1) score = "Advantage player1";
+                else if (pointDifference == -1) score = "Advantage player2";
+                else if (pointDifference >= 2) score = "Win for player1";
                 else score = "Win for player2";
             }
             else
