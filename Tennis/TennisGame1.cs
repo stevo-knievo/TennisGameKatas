@@ -5,6 +5,14 @@ namespace Tennis
 {
     class Player
     {
+
+        private static string[] PointNames = new string[]{
+            "Love",
+            "Fifteen",
+            "Thirty",
+            "Forty"
+        };
+
         public Player(string name)
         {
             Name = name;
@@ -20,18 +28,16 @@ namespace Tennis
         {
             _points++;
         }
+
+        public string GetScore()
+        {
+            return PointNames[_points];
+        }
     }
 
     class TennisGame1 : ITennisGame
     {
         private List<Player> _players = new List<Player>();
-
-        private string[] PointNames = new string[]{
-            "Love",
-            "Fifteen",
-            "Thirty",
-            "Forty"
-        };
 
         public TennisGame1(string player1Name, string player2Name)
         {
@@ -55,7 +61,7 @@ namespace Tennis
                 if (player1.Points > 2)
                     score = "Deuce";
                 else
-                    score = PointNames[player1.Points] + "-All";
+                    score = player1.GetScore() + "-All";
             }
             else if (player1.Points >= 4 || player2.Points >= 4)
             {
@@ -67,7 +73,7 @@ namespace Tennis
             }
             else
             {
-                score = PointNames[player1.Points] + "-" + PointNames[player2.Points];
+                score = player1.GetScore() + "-" + player2.GetScore();
             }
             return score;
         }
