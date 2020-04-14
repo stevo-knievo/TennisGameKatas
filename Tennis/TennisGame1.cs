@@ -1,55 +1,60 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Tennis
 {
+    class Player
+    {
+        public string Name { get; set; }
+        public int Points { get; set; }
+    }
+
     class TennisGame1 : ITennisGame
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
-        private string player1Name;
-        private string player2Name;
+        private List<Player> _players = new List<Player>();
 
-        private string[] ScoreNames = new string[]{
+        private string[] PointNames = new string[]{
             "Love",
             "Fifteen",
             "Thirty",
-            "Forty"                       
-        } ;
+            "Forty"
+        };
 
         public TennisGame1(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            _players.Add(new Player { Name = player1Name });
+            _players.Add(new Player { Name = player2Name });
         }
 
         public void WonPoint(string playerName)
         {
-            if (playerName == "player1")
-                m_score1 += 1;
-            else
-                m_score2 += 1;
+            _players.First(p=>p.Name==playerName).Points++;
         }
 
         public string GetScore()
         {
             string score = "";
-
-            if (m_score1 == m_score2)
+            var player1 = _players[0];
+            var player2 = _players[1];
+            
+            if (player1.Points == player2.Points)
             {
-                if(m_score1>2)
-                    score="Deuce";
+                if (player1.Points > 2)
+                    score = "Deuce";
                 else
-                    score =  ScoreNames[m_score1]+"-All";
+                    score = PointNames[player1.Points] + "-All";
             }
-            else if (m_score1 >= 4 || m_score2 >= 4)
+            else if (player1.Points >= 4 || player2.Points >= 4)
             {
-                var minusResult = m_score1 - m_score2;
-                if (minusResult == 1) score = "Advantage player1";
-                else if (minusResult == -1) score = "Advantage player2";
-                else if (minusResult >= 2) score = "Win for player1";
+                var difference = player1.Points - player2.Points;
+                if (difference == 1) score = "Advantage player1";
+                else if (difference == -1) score = "Advantage player2";
+                else if (difference >= 2) score = "Win for player1";
                 else score = "Win for player2";
             }
             else
             {
-                score=ScoreNames[m_score1]+"-"+ScoreNames[m_score2];
+                score = PointNames[player1.Points] + "-" + PointNames[player2.Points];
             }
             return score;
         }
