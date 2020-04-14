@@ -5,7 +5,7 @@ namespace Tennis
 {
     class Player
     {
-        private static string[] PointNames = new string[]{
+        private static readonly string[] PointNames = new string[]{
             "Love",
             "Fifteen",
             "Thirty",
@@ -30,9 +30,34 @@ namespace Tennis
             _points++;
         }
 
-        public string GetScore()
+        private string GetScore()
         {
             return PointNames[_points];
+        }
+
+        public string GetComparativeScore(Player opponent)
+        {
+            var score="";
+            if (Points == opponent.Points)
+            {
+                return Points > 2 ? 
+                    score = "Deuce"
+                :
+                    score = GetScore() + "-All";
+            }
+            
+            if (Points >= 4 || opponent.Points >= 4)
+            {
+                var pointDifference = Points - opponent.Points;
+                if (pointDifference == 1) score = "Advantage player1";
+                else if (pointDifference == -1) score = "Advantage player2";
+                else if (pointDifference >= 2) score = "Win for player1";
+                else score = "Win for player2";
+
+                return score;
+            }
+            
+            return GetScore() + "-" + opponent.GetScore();
         }
     }
 
@@ -61,28 +86,7 @@ namespace Tennis
 
         public string GetScore()
         {
-            string score = "";
-
-            if (_player1.Points == _player2.Points)
-            {
-                return _player1.Points > 2 ? 
-                    score = "Deuce"
-                :
-                    score = _player1.GetScore() + "-All";
-            }
-            
-            if (_player1.Points >= 4 || _player2.Points >= 4)
-            {
-                var pointDifference = _player1.Points - _player2.Points;
-                if (pointDifference == 1) score = "Advantage player1";
-                else if (pointDifference == -1) score = "Advantage player2";
-                else if (pointDifference >= 2) score = "Win for player1";
-                else score = "Win for player2";
-
-                return score;
-            }
-            
-            return _player1.GetScore() + "-" + _player2.GetScore();
+            return _player1.GetComparativeScore(_player2);
         }
     }
 }
