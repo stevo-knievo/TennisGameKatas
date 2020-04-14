@@ -18,8 +18,8 @@ namespace Tennis
         }
      
         public string Name { get; }
-        private int _points;
-     
+
+        private int _points;     
         public int Points
         {
             get { return _points; }
@@ -65,24 +65,24 @@ namespace Tennis
 
             if (_player1.Points == _player2.Points)
             {
-                if (_player1.Points > 2)
-                    score = "Deuce";
-                else
+                return _player1.Points > 2 ? 
+                    score = "Deuce"
+                :
                     score = _player1.GetScore() + "-All";
             }
-            else if (_player1.Points >= 4 || _player2.Points >= 4)
+            
+            if (_player1.Points >= 4 || _player2.Points >= 4)
             {
                 var pointDifference = _player1.Points - _player2.Points;
                 if (pointDifference == 1) score = "Advantage player1";
                 else if (pointDifference == -1) score = "Advantage player2";
                 else if (pointDifference >= 2) score = "Win for player1";
                 else score = "Win for player2";
+
+                return score;
             }
-            else
-            {
-                score = _player1.GetScore() + "-" + _player2.GetScore();
-            }
-            return score;
+            
+            return _player1.GetScore() + "-" + _player2.GetScore();
         }
     }
 }
